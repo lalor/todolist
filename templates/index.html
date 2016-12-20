@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table class="table table-hover">
+    <thead>
+        <th class="active">No</th>
+        <th class="active">描述</th>
+        <th class="active">是否完成</th>
+        <th class="active">创建时间</th>
+    </thead>
+    <tbody>
+        {% for todo in todo_list %}
+
+            <!-- tr -->
+            {% if todo['status'] %} <tr class="success">
+            {% else %} <tr class="info"> {% endif %}
+                <td>{{ loop.index }}</td>
+                <td>{{ todo['title'] }}</td>
+                <td>{{ todo['status'] }}</td>
+                <td>{{ todo['create_time'] }}</td>
+            </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}

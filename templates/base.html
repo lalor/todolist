@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{{ url_for('static', filename='css/bootstrap.css', _external=True )}}" rel="stylesheet">
+        {% block title %} <title>My TODO List</title> {% endblock %}
+    </head>
+
+    <body>
+        <div class="container">
+            <!-- navbar -->
+            <nav class="navbar navbar-inverse container">
+            <div class="navbar-header"> <a class="navbar-brand" href="{{ url_for('show_todo_list') }}">TODO</a> </div>
+            </nav>
+
+            <!-- body block -->
+            {% block content %}
+            {% endblock %}
+
+        </div>
+        <script src="{{ url_for('static', filename='js/jquery.js', _external=True )}}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.js', _external=True )}}"></script>
+    </body>
+</html>
