@@ -2,6 +2,8 @@
 #-*- coding: UTF-8 -*-
 from __future__ import unicode_literals
 
+import time
+
 import pymysql
 from flask import (Flask, render_template, g, session, redirect, url_for,
                 request, flash)
@@ -36,16 +38,27 @@ def after_request(response):
     return response
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def show_todo_list():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
 
-    sql = 'select id, user_id, title, status, create_time from todolist'
-    with g.db as cur:
-        cur.execute(sql)
-        todo_list = [ dict(id=row[0], user_id=row[1], title=row[2], status=bool(row[3]), create_time=row[4]) for row in cur.fetchall()]
-    return render_template('index.html', todo_list=todo_list)
+    if request.method == 'GET':
+        sql = 'select id, user_id, title, status, create_time from todolist'
+        with g.db as cur:
+            cur.execute(sql)
+            todo_list = [ dict(id=row[0], user_id=row[1], title=row[2], status=bool(row[3]), create_time=row[4]) for row in cur.fetchall()]
+        return render_template('index.html', todo_list=todo_list)
+    else:
+        title = request.form['title']
+        status = request.form['status']
+        with g.db as cur:
+            sql = """insert into todolist(`user_id`, `title`, `status`,
+            `create_time`) values ({0}, '{1}', {2}, {3})""".format( 1, title, status, int(time.time()))
+            app.logger.info(sql)
+            cur.execute(sql)
+        flash('You have add a new todo list')
+        return redirect(url_for('show_todo_list'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
