@@ -20,8 +20,17 @@
                 <li><a class="btn" href="{{ url_for('logout') }}">logout</a></li>
             </ul>
             {% endif %}
-
             </nav>
+
+            <!-- flash message -->
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">close</span></button>
+                {{ message }}
+            </div>
+            {% endfor %}
 
             <!-- body block -->
             {% block content %}

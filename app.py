@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 import pymysql
 from flask import (Flask, render_template, g, session, redirect, url_for,
-                request)
+                request, flash)
 
 SECRET_KEY = 'This is my key'
 
@@ -53,11 +53,12 @@ def login():
     error = None
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid username'
+            flash('Invalid username')
         elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid password'
+            flash('Invalid password')
         else:
             session['logged_in'] = True
+            flash('you have logged in!')
             return redirect(url_for('show_todo_list'))
     return render_template('login.html')
 
@@ -65,6 +66,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
+    flash('you have logout!')
     return redirect(url_for('login'))
 
 
