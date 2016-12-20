@@ -61,6 +61,19 @@ def show_todo_list():
         return redirect(url_for('show_todo_list'))
 
 
+@app.route('/delete')
+def delete_todo_list():
+    id = request.args.get('id', None)
+    if id is None:
+        abort(404)
+    else:
+        sql = "delete from todolist where id = {0}".format(id)
+        with g.db as cur:
+            cur.execute(sql)
+        flash('You have delete a todo list')
+        return redirect(url_for('show_todo_list'))
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None

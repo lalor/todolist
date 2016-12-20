@@ -8,6 +8,7 @@
         <th class="active">描述</th>
         <th class="active">是否完成</th>
         <th class="active">创建时间</th>
+        <th class='active'>操作</th> 
     </thead>
     <tbody>
         {% for todo in todo_list %}
@@ -19,6 +20,14 @@
                 <td>{{ todo['title'] }}</td>
                 <td>{{ todo['status'] }}</td>
                 <td>{{ todo['create_time'] }}</td>
+                <td>
+                    {% if todo['status'] %}
+                        <a href="/delete?id={{ todo['id'] }}" class="btn btn-danger" role ="button">删除</a>
+                    {% else %}
+                        <a href="/modify?id={{ todo['id'] }}" class="btn btn-success" role ="button">修改</a>
+                    {% endif %}
+                </td>
+
             </tr>
         {% endfor %}
 
