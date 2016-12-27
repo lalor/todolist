@@ -1,43 +1,32 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="{{ url_for('static', filename='css/bootstrap.css', _external=True )}}" rel="stylesheet">
-        {% block title %} <title>My TODO List</title> {% endblock %}
-    </head>
+{% extends "bootstrap/base.html" %}
 
-    <body>
-        <div class="container">
-            <!-- navbar -->
-            <nav class="navbar navbar-inverse container">
-            <div class="navbar-header"> <a class="navbar-brand" href="{{ url_for('show_todo_list') }}">TODO</a> </div>
+{% block title %}My TODO List{% endblock %}
 
-            <!-- logout links -->
-            {% if "logged_in" in session %}
-            <ul class="nav navbar-nav pull-right">
-                <li><a class="btn" href="{{ url_for('logout') }}">logout</a></li>
-            </ul>
-            {% endif %}
-            </nav>
+{% block navbar %}
+    <nav class="navbar navbar-inverse container">
+        <div class="navbar-header"> <a class="navbar-brand" href="{{ url_for('show_todo_list') }}">TODO</a> </div>
+        <!-- logout links -->
+        {% if "logged_in" in session %}
+        <ul class="nav navbar-nav pull-right">
+            <li><a class="btn" href="{{ url_for('logout') }}">logout</a></li>
+        </ul>
+    {% endif %}
+    </nav>
+{% endblock %}
 
-            <!-- flash message -->
-            {% for message in get_flashed_messages() %}
-            <div class="alert alert-warning alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">close</span></button>
-                {{ message }}
-            </div>
-            {% endfor %}
-
-            <!-- body block -->
-            {% block content %}
-            {% endblock %}
-
+{% block content %}
+    <div class="container">
+        <!-- flash message -->
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">close</span></button>
+            {{ message }}
         </div>
-        <script src="{{ url_for('static', filename='js/jquery.js', _external=True )}}"></script>
-        <script src="{{ url_for('static', filename='js/bootstrap.js', _external=True )}}"></script>
-    </body>
-</html>
+        {% endfor %}
+
+        <!-- body block -->
+        {% block page_content %} {% endblock %}
+    </div>
+{% endblock %}

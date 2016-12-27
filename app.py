@@ -7,10 +7,13 @@ import time
 import pymysql
 from flask import (Flask, render_template, g, session, redirect, url_for,
                 request, flash)
+from flask_bootstrap import Bootstrap
 
 SECRET_KEY = 'This is my key'
 
 app = Flask(__name__)
+bootstrap = Bootstrap(app)
+
 app.secret_key = SECRET_KEY
 app.config['USERNAME'] = 'admin'
 app.config['PASSWORD'] = 'admin'
