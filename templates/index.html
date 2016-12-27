@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block page_content %}
 
@@ -47,26 +48,9 @@
       </div>
 
       <div class="modal-body">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-
-                    <form class="form-horizontal"  action="{{ url_for('show_todo_list') }}" method="POST" >
-                        <div class="form-group">
-                            <label class="control-label inline", for='title'>描述</label>
-                            <input type="text" class="form-control" name="title" id="title">
-                        </div>
-
-                        <div class="form-group">
-                            <label>是否完成</label>
-                            <label class="radio-inline"> <input type="radio" name="status" value="1">是</label>
-                            <label class="radio-inline"> <input type="radio" name="status" value="0">否</label>
-                        </div>
-
-                        <button type="submit"  class ="btn btn-primary" >ADD</button>
-                    </form> <!-- end form -->
-
-                </div>
-            </div>
+          <div class="row">
+              <div class="col-md-8 col-md-offset-2"> {{ wtf.quick_form(form, form_type="horizontal") }} </div>
+          </div>
       </div> <!-- modal body -->
 
     </div> </div>
