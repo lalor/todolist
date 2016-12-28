@@ -12,20 +12,20 @@
         <th class='active'>操作</th> 
     </thead>
     <tbody>
-        {% for todo in todo_list %}
+        {% for todo in todolists %}
 
             <!-- tr -->
-            {% if todo['status'] %} <tr class="success">
+            {% if todo.status %} <tr class="success">
             {% else %} <tr class="info"> {% endif %}
                 <td>{{ loop.index }}</td>
-                <td>{{ todo['title'] }}</td>
-                <td>{{ todo['status'] }}</td>
-                <td>{{ todo['create_time'] }}</td>
+                <td>{{ todo.title }}</td>
+                <td>{{ todo.status }}</td>
+                <td>{{ todo.create_time }}</td>
                 <td>
-                    {% if todo['status'] %}
-                    <a href="{{ url_for('delete_todo_list', id=todo['id']) }}" class="btn btn-danger" role ="button">删除</a>
+                    {% if todo.status %}
+                    <a href="{{ url_for('delete_todo_list', id=todo.id) }}" class="btn btn-danger" role ="button">删除</a>
                     {% else %}
-                        <a href="/modify?id={{ todo['id'] }}" class="btn btn-success" role ="button">修改</a>
+                        <a href="/modify?id={{ todo.id }}" class="btn btn-success" role ="button">修改</a>
                     {% endif %}
                 </td>
 

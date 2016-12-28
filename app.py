@@ -2,14 +2,13 @@
 #-*- coding: UTF-8 -*-
 from __future__ import unicode_literals
 
-import time
-
 import pymysql
-from flask import (Flask, render_template, g, session, redirect, url_for,
-                request, flash)
+from flask import (Flask, render_template, g, session, redirect, url_for, request, flash)
 from flask_bootstrap import Bootstrap
 
 from forms import TodoListForm
+from ext import db
+from models import TodoList
 
 SECRET_KEY = 'This is my key'
 
@@ -19,28 +18,11 @@ bootstrap = Bootstrap(app)
 app.secret_key = SECRET_KEY
 app.config['USERNAME'] = 'admin'
 app.config['PASSWORD'] = 'admin'
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://laimingxing:laimingxing@59.111.123.138/test"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 
-def connect_db():
-    """Returns a new connection to the database."""
-    return pymysql.connect(host='127.0.0.1',
-            user='laimingxing',
-            passwd='laimingxing',
-            db='test',
-            charset='utf8')
-
-
-@app.before_request
-def before_request():
-    """Make sure we are connected to the database each request."""
-    g.db = connect_db()
-
-
-@app.after_request
-def after_request(response):
-    """Closes the database again at the end of the request."""
-    g.db.close()
-    return response
+db.init_app(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -50,19 +32,13 @@ def show_todo_list():
 
     form = TodoListForm()
     if request.method == 'GET':
-        sql = 'select id, user_id, title, status, create_time from todolist'
-        with g.db as cur:
-            cur.execute(sql)
-            todo_list = [ dict(id=row[0], user_id=row[1], title=row[2], status=bool(row[3]), create_time=row[4]) for row in cur.fetchall()]
-        return render_template('index.html', todo_list=todo_list, form=form)
+        todolists = TodoList.query.all()
+        return render_template('index.html', todolists=todolists, form=form)
     else:
         if form.validate_on_submit():
-            title = form.title.data
-            status = form.status.data
-            with g.db as cur:
-                sql = """insert into todolist(`user_id`, `title`, `status`,
-                `create_time`) values ({0}, '{1}', {2}, {3})""".format( 1, title, status, int(time.time()))
-                cur.execute(sql)
+            todolist = TodoList(1, form.title.data, form.status.data)
+            db.session.add(todolist)
+            db.session.commit()
             flash('You have add a new todo list')
         else:
             flash(form.errors)
@@ -75,9 +51,9 @@ def delete_todo_list():
     if id is None:
         abort(404)
     else:
-        sql = "delete from todolist where id = {0}".format(id)
-        with g.db as cur:
-            cur.execute(sql)
+        todolist = TodoList.query.filter_by(id=id).first_or_404()
+        db.session.delete(todolist)
+        db.session.commit()
         flash('You have delete a todo list')
         return redirect(url_for('show_todo_list'))
 
