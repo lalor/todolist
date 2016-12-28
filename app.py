@@ -54,6 +54,27 @@ def delete_todo_list(id):
      return redirect(url_for('show_todo_list'))
 
 
+@app.route('/change/<int:id>', methods=['GET', 'POST'])
+def change_todo_list(id):
+    if request.method == 'GET':
+        todolist = TodoList.query.filter_by(id=id).first_or_404()
+        form = TodoListForm()
+        form.title.data = todolist.title
+        form.status.data = str(todolist.status)
+        return render_template('modify.html', form=form)
+    else:
+        form = TodoListForm()
+        if form.validate_on_submit():
+            todolist = TodoList.query.filter_by(id=id).first_or_404()
+            todolist.title = form.title.data
+            todolist.status = form.status.data
+            db.session.commit()
+            flash('You have modify a todolist')
+        else:
+            flash(form.errors)
+        return redirect(url_for('show_todo_list'))
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
