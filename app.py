@@ -2,8 +2,7 @@
 #-*- coding: UTF-8 -*-
 from __future__ import unicode_literals
 
-import pymysql
-from flask import (Flask, render_template, g, session, redirect, url_for, request, flash)
+from flask import (Flask, render_template, session, redirect, url_for, request, flash)
 from flask_bootstrap import Bootstrap
 
 from forms import TodoListForm
@@ -77,7 +76,6 @@ def change_todo_list(id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    error = None
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
             flash('Invalid username')
@@ -98,4 +96,4 @@ def logout():
 
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
