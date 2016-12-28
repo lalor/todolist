@@ -6,11 +6,11 @@
     <nav class="navbar navbar-inverse container">
         <div class="navbar-header"> <a class="navbar-brand" href="{{ url_for('show_todo_list') }}">TODO</a> </div>
         <!-- logout links -->
-        {% if "logged_in" in session %}
-        <ul class="nav navbar-nav pull-right">
-            <li><a class="btn" href="{{ url_for('logout') }}">logout</a></li>
-        </ul>
-    {% endif %}
+        {% if current_user.is_authenticated %}
+            <ul class="nav navbar-nav pull-right">
+                <li><a class="btn" href="{{ url_for('logout') }}">logout</a></li>
+            </ul>
+        {% endif %}
     </nav>
 {% endblock %}
 
