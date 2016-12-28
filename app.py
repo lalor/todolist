@@ -45,17 +45,13 @@ def show_todo_list():
         return redirect(url_for('show_todo_list'))
 
 
-@app.route('/delete')
-def delete_todo_list():
-    id = request.args.get('id', None)
-    if id is None:
-        abort(404)
-    else:
-        todolist = TodoList.query.filter_by(id=id).first_or_404()
-        db.session.delete(todolist)
-        db.session.commit()
-        flash('You have delete a todo list')
-        return redirect(url_for('show_todo_list'))
+@app.route('/delete/<int:id>')
+def delete_todo_list(id):
+     todolist = TodoList.query.filter_by(id=id).first_or_404()
+     db.session.delete(todolist)
+     db.session.commit()
+     flash('You have delete a todo list')
+     return redirect(url_for('show_todo_list'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
