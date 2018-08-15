@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#-*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 from __future__ import unicode_literals
 
 from flask import (Flask, render_template, redirect, url_for, request, flash)
@@ -16,25 +16,30 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 app.secret_key = SECRET_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://laimingxing:laimingxing@59.111.123.138/test"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+cymysql://root:10ruMYSQL@localhost:3306/flask_navi'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
 
 db.init_app(app)
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
+@app.route('/')
+def show_navi_page():
+    form = TodoListForm()
+    todolists = TodoList.query.all()
+    return render_template('index.html', todolists=todolists, form=form)
 
-@app.route('/', methods=['GET', 'POST'])
+
+@app.route('/manage', methods=['GET', 'POST'])
 @login_required
 def show_todo_list():
     form = TodoListForm()
     if request.method == 'GET':
         todolists = TodoList.query.all()
-        return render_template('index.html', todolists=todolists, form=form)
+        return render_template('manage.html', todolists=todolists, form=form)
     else:
         if form.validate_on_submit():
-            todolist = TodoList(current_user.id, form.title.data, form.status.data)
+            todolist = TodoList(current_user.id, form.title.data, form.url.data, form.description.data, form.group_id.data, form.status.data)
             db.session.add(todolist)
             db.session.commit()
             flash('You have add a new todo list')
@@ -46,11 +51,11 @@ def show_todo_list():
 @app.route('/delete/<int:id>')
 @login_required
 def delete_todo_list(id):
-     todolist = TodoList.query.filter_by(id=id).first_or_404()
-     db.session.delete(todolist)
-     db.session.commit()
-     flash('You have delete a todo list')
-     return redirect(url_for('show_todo_list'))
+    todolist = TodoList.query.filter_by(id=id).first_or_404()
+    db.session.delete(todolist)
+    db.session.commit()
+    flash('You have delete a todo list')
+    return redirect(url_for('show_todo_list'))
 
 
 @app.route('/change/<int:id>', methods=['GET', 'POST'])

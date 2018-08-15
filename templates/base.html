@@ -1,16 +1,28 @@
 {% extends "bootstrap/base.html" %}
 
-{% block title %}My TODO List{% endblock %}
+{% block title %}Simple Navi|森破导航{% endblock %}
+
+{%- block metas %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="森破" />
+    <meta name="description" content="森破导航" />
+{%- endblock metas %}
 
 {% block navbar %}
     <nav class="navbar navbar-inverse container">
-        <div class="navbar-header"> <a class="navbar-brand" href="{{ url_for('show_todo_list') }}">TODO</a> </div>
+        <div class="navbar-header"> <a class="navbar-brand" href="{{ url_for('show_navi_page') }}">Simple Navi</a> </div>
         <!-- logout links -->
         {% if current_user.is_authenticated %}
             <ul class="nav navbar-nav pull-right">
-                <li><a class="btn" href="{{ url_for('logout') }}">logout</a></li>
+                <li><a class="btn" href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
+            </ul>
+        {% else %}
+            <ul class="nav navbar-nav pull-right">
+                <li><a class="btn" href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-in"></span>登录</a></li>
             </ul>
         {% endif %}
+
     </nav>
 {% endblock %}
 
@@ -29,4 +41,13 @@
         <!-- body block -->
         {% block page_content %} {% endblock %}
     </div>
+{% endblock %}
+
+
+{% block footer %}
+<div class="mastfoot">
+<div class="inner">
+    <p class="text-muted" align="center">Copyright © LXFY|<a href="./info.php" target="_black">Server Info</a>|<a href="./oldindex.html" target="_blank">返回旧版</a></p>
+</div>
+</div>
 {% endblock %}
