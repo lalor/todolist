@@ -6,16 +6,16 @@ from wtforms import RadioField, SubmitField, StringField, PasswordField, Integer
 from wtforms.validators import DataRequired, Length, Optional
 
 
-class TodoListForm(FlaskForm):
+class SiteListForm(FlaskForm):
     title = StringField('标题', validators=[DataRequired(), Length(1, 64)])
     url = StringField('链接', validators=[DataRequired()])
     description = StringField('简介', validators=[Optional()], default='A good website.')
     group_id = IntegerField('组别', validators=[DataRequired()], default='1')
-    status = RadioField('是否完成', validators=[DataRequired()],  choices=[("1", '是'),("0",'否')])
+    status = RadioField('显示状态', validators=[DataRequired()],  choices=[("1", '上线'),("0",'下线')])
     submit = SubmitField('提交')
 
 
 class LoginForm(FlaskForm):
-    username = StringField('用户名', validators=[DataRequired(), Length(1, 24)])
+    username = StringField('用户', validators=[DataRequired(), Length(1, 24)])
     password = PasswordField('密码', validators=[DataRequired(), Length(1, 24)])
     submit = SubmitField('登录')

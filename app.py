@@ -6,9 +6,9 @@ from flask import (Flask, render_template, redirect, url_for, request, flash)
 from flask_bootstrap import Bootstrap
 from flask_login import login_required, login_user, logout_user, current_user
 
-from forms import TodoListForm, LoginForm
+from forms import SiteListForm, LoginForm
 from ext import db, login_manager
-from models import SiteList, User
+from models import SiteList, User, GroupList
 
 SECRET_KEY = 'This is my key'
 
@@ -23,23 +23,25 @@ db.init_app(app)
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
+
 @app.route('/')
 def show_navi_page():
-    form = TodoListForm()
     sitelists = SiteList.query.all()
-    return render_template('index.html', sitelists=sitelists, form=form)
+    grouplists = GroupList.query.all()
+    return render_template('index.html', sitelists=sitelists, grouplists=grouplists)
 
 
 @app.route('/manage', methods=['GET', 'POST'])
 @login_required
 def show_todo_list():
-    form = TodoListForm()
+    form = SiteListForm()
     if request.method == 'GET':
         todolists = SiteList.query.all()
         return render_template('manage.html', todolists=todolists, form=form)
     else:
         if form.validate_on_submit():
-            todolist = SiteList(current_user.id, form.title.data, form.url.data, form.description.data, form.group_id.data, form.status.data)
+            todolist = SiteList(current_user.id, form.title.data, form.url.data, form.description.data,
+                                form.group_id.data, form.status.data)
             db.session.add(todolist)
             db.session.commit()
             flash('You have add a new todo list')
@@ -63,12 +65,12 @@ def delete_todo_list(id):
 def change_todo_list(id):
     if request.method == 'GET':
         todolist = SiteList.query.filter_by(id=id).first_or_404()
-        form = TodoListForm()
+        form = SiteListForm()
         form.title.data = todolist.title
         form.status.data = str(todolist.status)
         return render_template('modify.html', form=form)
     else:
-        form = TodoListForm()
+        form = SiteListForm()
         if form.validate_on_submit():
             todolist = SiteList.query.filter_by(id=id).first_or_404()
             todolist.title = form.title.data
