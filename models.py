@@ -1,13 +1,13 @@
 #!/usr/bin/python
-#-*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 import time
 
 from ext import db
 from flask_login import UserMixin
 
 
-class TodoList(db.Model):
-    __tablename__ = 'todolist'
+class SiteList(db.Model):
+    __tablename__ = 'sitelist'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
     group_id = db.Column(db.Integer, nullable=False, default='1')
@@ -25,6 +25,18 @@ class TodoList(db.Model):
         self.group_id = group_id
         self.status = status
         self.create_time = time.time()
+
+
+class GroupList(db.Model):
+    __tablename__ = "group"
+    id = db.Column(db.Integer, primary_key=True)
+    parent_id = db.Column(db.Integer)
+    name = db.Column(db.String(64), nullable=True)
+
+    def __init__(self, id, parent_id, name):
+        self.id = id
+        self.parent_id = parent_id
+        self.name = name
 
 
 class User(UserMixin, db.Model):

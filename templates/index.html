@@ -3,20 +3,20 @@
 
 {% block page_content %}
 <div class="jumbotron">
-    <img src="./static/img/KJU.jpg" class="rounded img-fluid" width="128" height="128" align="right">
+    <img src="./static/img/KJU.jpg" class="img-rounded" width="128" height="128" align="right">
     <h1>森破导航</h1>
     <p>Stay young, stay simple.</p>
 </div>
 
 <table class="table table-striped">
     <tbody>
-        <!-- TODO: group filter-->
+        {# TODO: group filter #}
         <tr class="bz-row">
         <th class="">常用</th>
-        {% for todo in todolists %}
+        {% for todo in sitelists %}
             {% if todo.status %}
                 <td class="">
-                    <a href={{ todo.url }} target="_blank">{{ todo.title }}</a>
+                    <a href="{{ todo.url }}" target="_blank" alt="{{ todo.description }}">{{ todo.title }}</a>
                 </td>
             {% endif %}
         {% endfor %}
