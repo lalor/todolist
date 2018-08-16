@@ -8,19 +8,22 @@
     <p>Stay young, stay simple.</p>
 </div>
 
-<table class="table table-striped">
+<table class="table table-bordered table-striped" style="word-break:break-all; word-wrap:break-all">
     <tbody>
         {# TODO: group filter #}
-        <tr class="bz-row">
-        <th class="">常用</th>
-        {% for todo in sitelists %}
-            {% if todo.status %}
-                <td class="">
-                    <a href="{{ todo.url }}" target="_blank" alt="{{ todo.description }}">{{ todo.title }}</a>
-                </td>
-            {% endif %}
+        {% for group in grouplists %}
+            <tr class="bz-row">
+            <th class="">{{ group.name }}</th>
+            {% for site in sitelists %}
+                {% if site.group_id == group.id and site.status %}
+                    <td class="">
+                        <a href="{{ site.url }}" target="_blank" alt="{{ site.description }}">{{ site.title }}</a>
+                    </td>
+                {% endif %}
+            {% endfor %}
+            </tr>
         {% endfor %}
-        </tr>
+
     </tbody>
 </table>
 

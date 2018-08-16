@@ -33,21 +33,22 @@ def show_navi_page():
 
 @app.route('/manage', methods=['GET', 'POST'])
 @login_required
-def show_todo_list():
+def edit_site_list():
     form = SiteListForm()
     if request.method == 'GET':
-        todolists = SiteList.query.all()
-        return render_template('manage.html', todolists=todolists, form=form)
+        sitelists = SiteList.query.all()
+        grouplists = GroupList.query.all()
+        return render_template('manage.html', sitelists=sitelists, grouplists=grouplists, form=form)
     else:
         if form.validate_on_submit():
             todolist = SiteList(current_user.id, form.title.data, form.url.data, form.description.data,
                                 form.group_id.data, form.status.data)
             db.session.add(todolist)
             db.session.commit()
-            flash('You have add a new todo list')
+            flash('New site added!')
         else:
             flash(form.errors)
-        return redirect(url_for('show_todo_list'))
+        return redirect(url_for('edit_site_list'))
 
 
 @app.route('/delete/<int:id>')
@@ -57,7 +58,7 @@ def delete_todo_list(id):
     db.session.delete(todolist)
     db.session.commit()
     flash('You have delete a todo list')
-    return redirect(url_for('show_todo_list'))
+    return redirect(url_for('edit_site_list'))
 
 
 @app.route('/change/<int:id>', methods=['GET', 'POST'])
@@ -79,7 +80,7 @@ def change_todo_list(id):
             flash('You have modify a todolist')
         else:
             flash(form.errors)
-        return redirect(url_for('show_todo_list'))
+        return redirect(url_for('edit_site_list'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -89,7 +90,7 @@ def login():
         if user:
             login_user(user)
             flash('you have logged in!')
-            return redirect(url_for('show_todo_list'))
+            return redirect(url_for('edit_site_list'))
         else:
             flash('Invalid username or password')
     form = LoginForm()
