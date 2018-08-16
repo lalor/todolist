@@ -7,11 +7,14 @@
 # @Software: PyCharm
 
 from flask import current_app
-from models import SiteList
+from models.lists import SiteList
 
-def get_links_by_group(group_id=1):
-    sitelists = SiteList.query.all()
-    print(sitelists)
-    pass
 
-get_links_by_group(1)
+def get_links_by_group(self, group_id=1):
+    site_in_group = SiteList.query.filter_by(group_id=group_id)
+    return site_in_group
+
+def get_all_links():
+    all_links = SiteList.query.order_by(SiteList.group_id)
+    return all_links
+

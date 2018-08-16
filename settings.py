@@ -6,4 +6,4 @@
 # @File    : settings.py
 # @Software: PyCharm
 
-LINK_PER_LINE = 6
+LINKS_PER_LINE = 6

@@ -17,6 +17,7 @@
         </div>
     </div>
     <h2>Edit groups&nbsp;<small>Edit or delete groups.</small></h2>
+    {{ grouplists.items }}
     <table class="table table-hover table-striped">
         <thead>
         <th class="active">No</th>
@@ -40,6 +41,7 @@
     <table class="table table-hover table-striped">
         <thead>
         <th class="active">No</th>
+        <th class="active">Group</th>
         <th class="active">Title</th>
         <th class="active">Description</th>
         <th class="active">Create Date</th>
@@ -51,6 +53,7 @@
             <!-- tr -->
             <tr class="bz-row">
                 <td>{{ site.id }}</td>
+                <td>{{ site.group_id }}</td>
                 <td><a href={{ site.url }} target="_blank">{{ site.title }}</a>
                     {# Show Badge by status #}
                     {% if site.status %}<span class="label label-primary">展示</span>

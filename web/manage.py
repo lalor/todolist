@@ -11,16 +11,20 @@ from ext import db, login_manager
 
 from models.forms import SiteListForm, LoginForm
 from models.lists import SiteList, GroupList, User
+from libs.links import get_links_by_group, get_all_links
 from . import web
+
+
+
 
 @web.route('/manage', methods=['GET', 'POST'])
 @login_required
 def edit_site_list():
     form = SiteListForm()
     if request.method == 'GET':
-        sitelists = SiteList.query.all()
+        all_links = get_all_links()
         grouplists = GroupList.query.all()
-        return render_template('manage.html', sitelists=sitelists, grouplists=grouplists, form=form)
+        return render_template('manage.html', sitelists=all_links, grouplists=grouplists, form=form)
     else:
         if form.validate_on_submit():
             todolist = SiteList(current_user.id, form.title.data, form.url.data, form.description.data,
@@ -33,13 +37,11 @@ def edit_site_list():
         return redirect(url_for('web.edit_site_list'))
 
 
-
 @web.route('/')
 def show_navi_page():
     sitelists = SiteList.query.all()
     grouplists = GroupList.query.all()
     return render_template('index.html', sitelists=sitelists, grouplists=grouplists)
-
 
 
 @web.route('/delete/<int:id>')
