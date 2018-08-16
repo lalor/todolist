@@ -9,8 +9,8 @@ from flask import request, render_template, flash, redirect, url_for
 from flask_login import login_required, current_user, login_user, logout_user
 from ext import db, login_manager
 
-from forms import SiteListForm, LoginForm
-from models import SiteList, GroupList, User
+from models.forms import SiteListForm, LoginForm
+from models.lists import SiteList, GroupList, User
 from . import web
 
 @web.route('/manage', methods=['GET', 'POST'])
