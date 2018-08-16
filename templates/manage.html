@@ -60,8 +60,8 @@
                 <td>{{ site.description }}</td>
                 <td>{{ site.create_time }}</td>
                 <td>
-                    <a href="{{ url_for('change_todo_list', id=site.id) }}" class="btn btn-success" role="button">修改</a>
-                    <a href="{{ url_for('delete_todo_list', id=site.id) }}" class="btn btn-danger" role="button">删除</a>
+                    <a href="{{ url_for('web.change_site', id=site.id) }}" class="btn btn-success" role="button">修改</a>
+                    <a href="{{ url_for('web.delete_site', id=site.id) }}" class="btn btn-danger" role="button">删除</a>
                 </td>
 
             </tr>

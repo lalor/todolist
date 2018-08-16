@@ -6,6 +6,7 @@ from ext import db
 from flask_login import UserMixin
 
 
+
 class SiteList(db.Model):
     __tablename__ = 'sitelist'
     id = db.Column(db.Integer, primary_key=True)
