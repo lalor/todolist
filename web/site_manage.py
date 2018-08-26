@@ -3,7 +3,7 @@
 # @Time    : 18-8-16 下午4:04
 # @Author  : LXFY
 # @Site    : 
-# @File    : manage.py
+# @File    : site_manage.py
 # @Software: PyCharm
 from flask import request, render_template, flash, redirect, url_for
 from flask_login import login_required, current_user, login_user, logout_user
@@ -15,7 +15,7 @@ from libs.links import get_links_by_group, get_all_links
 from . import web
 
 
-@web.route('/manage', methods=['GET', 'POST'])
+@web.route('/site/manage', methods=['GET', 'POST'])
 @login_required
 def edit_site_list():
     siteform = SiteListForm()
@@ -41,7 +41,7 @@ def edit_site_list():
         return redirect(url_for('web.edit_site_list'))
 
 
-@web.route('/delete/<int:id>')
+@web.route('/site/delete/<int:id>')
 @login_required
 def delete_site(id):
     todolist = SiteList.query.filter_by(id=id).first_or_404()
@@ -51,7 +51,7 @@ def delete_site(id):
     return redirect(url_for('web.edit_site_list'))
 
 
-@web.route('/change/<int:id>', methods=['GET', 'POST'])
+@web.route('/site/change/<int:id>', methods=['GET', 'POST'])
 @login_required
 def change_site(id):
     if request.method == 'GET':
@@ -78,29 +78,3 @@ def change_site(id):
             flash(form.errors)
         return redirect(url_for('web.edit_site_list'))
 
-
-@web.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        user = User.query.filter_by(username=request.form['username'], password=request.form['password']).first()
-        if user:
-            login_user(user)
-            flash('Logged in. Welcome!')
-            return redirect(url_for('web.edit_site_list'))
-        else:
-            flash('Invalid username or password')
-    form = LoginForm()
-    return render_template('login.html', form=form)
-
-
-@web.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    flash('Logged out.')
-    return redirect(url_for('web.login'))
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.filter_by(id=int(user_id)).first()
