@@ -34,8 +34,7 @@ class GroupList(db.Model):
     parent_id = db.Column(db.Integer)
     name = db.Column(db.String(64), nullable=True)
 
-    def __init__(self, id, parent_id, name):
-        self.id = id
+    def __init__(self, parent_id, name):
         self.parent_id = parent_id
         self.name = name
 

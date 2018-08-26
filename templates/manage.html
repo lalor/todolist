@@ -9,9 +9,9 @@
             <div class="span8">
                 <ul class="nav nav-pills">
                     <li class="active" data-toggle="modal" data-target="#newSiteModal"><a href="#"><span
-                            class="glyphicon glyphicon-link"></span>&nbsp; new site</a></li>
-                    <li data-toggle="modal" data-target="#groupModal"><a href="#"><span
-                            class="glyphicon glyphicon-book"></span>&nbsp; new group</a></li>
+                            class="glyphicon glyphicon-link"></span>添加网站</a></li>
+                    <li data-toggle="modal" data-target="#newGroupModal"><a href="#"><span
+                            class="glyphicon glyphicon-book"></span>添加分组</a></li>
                 </ul>
             </div>
         </div>
@@ -22,7 +22,6 @@
         <thead>
         <th class="active">No</th>
         <th class="active">Name</th>
-        <th class="active">Parent Name</th>
         <th class='active'>Ctrl</th>
         </thead>
         <tbody>
@@ -30,7 +29,6 @@
             <tr class="bz-row">
                 <td>{{ group.id }}</td>
                 <td>{{ group.name }}</td>
-                <td>PASS</td>
                 <td>PASS</td>
             </tr>
         {% endfor %}
@@ -87,13 +85,34 @@
 
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-8 col-md-offset-2"> {{ wtf.quick_form(form, form_type="horizontal") }} </div>
+                        <div class="col-md-8 col-md-offset-2"> {{ wtf.quick_form(siteform, form_type="horizontal") }} </div>
                     </div>
                 </div> <!-- modal body -->
 
             </div>
         </div>
     </div>
+        <div class="modal fade" id="newGroupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel" align="center">添加分组</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2"> {{ wtf.quick_form(groupform, form_type="horizontal") }} </div>
+                    </div>
+                </div> <!-- modal body -->
+
+            </div>
+        </div>
+    </div>
+
 
 
 {% endblock %}

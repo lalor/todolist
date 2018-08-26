@@ -11,3 +11,5 @@ from flask import Blueprint
 web = Blueprint('web', __name__)
 
 from web import manage
+from web import index
+from web import group_manage

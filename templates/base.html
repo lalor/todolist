@@ -5,22 +5,26 @@
 {%- block metas %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="keywords" content="森破" />
-    <meta name="description" content="森破导航" />
+    <meta name="keywords" content="森破"/>
+    <meta name="description" content="森破导航"/>
 {%- endblock metas %}
 
 {% block navbar %}
     <nav class="navbar navbar-inverse container">
-        <div class="navbar-header"> <a class="navbar-brand" href="{{ url_for('web.show_navi_page') }}">Simple Navi</a> </div>
+        <div class="navbar-header"><a class="navbar-brand" href="{{ url_for('web.show_navi_page') }}">Simple Navi</a>
+        </div>
         <!-- logout links -->
         {% if current_user.is_authenticated %}
             <ul class="nav navbar-nav pull-right">
-                <li><a class="btn" href="{{ url_for('web.edit_site_list') }}"><span class="glyphicon glyphicon-cog"></span>管理</a></li>
-                <li><a class="btn" href="{{ url_for('web.logout') }}"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
+                <li><a class="btn" href="{{ url_for('web.edit_site_list') }}"><span
+                        class="glyphicon glyphicon-cog"></span>管理</a></li>
+                <li><a class="btn" href="{{ url_for('web.logout') }}"><span class="glyphicon glyphicon-log-out"></span>登出</a>
+                </li>
             </ul>
         {% else %}
             <ul class="nav navbar-nav pull-right">
-                <li><a class="btn" href="{{ url_for('web.login') }}"><span class="glyphicon glyphicon-log-in"></span>登录</a></li>
+                <li><a class="btn" href="{{ url_for('web.login') }}"><span class="glyphicon glyphicon-log-in"></span>登录</a>
+                </li>
             </ul>
         {% endif %}
 
@@ -31,24 +35,25 @@
     <div class="container">
         <!-- flash message -->
         {% for message in get_flashed_messages() %}
-        <div class="alert alert-warning alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert">
-                <span aria-hidden="true">&times;</span>
-                <span class="sr-only">close</span></button>
-            {{ message }}
-        </div>
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">close</span></button>
+                {{ message }}
+            </div>
         {% endfor %}
 
         <!-- body block -->
         {% block page_content %} {% endblock %}
+        {% block footer %}
+            <div class="mastfoot">
+                <div class="inner">
+                    <p class="text-muted" align="center">Copyright © LXFY|<a href="./info.php" target="_black">Server
+                        Info</a></p>
+                </div>
+            </div>
+        {% endblock footer %}
     </div>
 {% endblock %}
 
 
-{% block footer %}
-<div class="mastfoot">
-<div class="inner">
-    <p class="text-muted" align="center">Copyright © LXFY|<a href="./info.php" target="_black">Server Info</a>|<a href="./oldindex.html" target="_blank">返回旧版</a></p>
-</div>
-</div>
-{% endblock %}
