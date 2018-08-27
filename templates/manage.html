@@ -29,7 +29,7 @@
             <tr class="bz-row">
                 <td>{{ group.id }}</td>
                 <td>{{ group.name }}</td>
-                <td>PASS</td>
+                <td><a href="{{ url_for('web.change_group', id=group.id) }}" class="btn btn-primary" role="button">修改</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -61,7 +61,7 @@
                 <td>{{ site.description }}</td>
                 <td>{{ site.create_time }}</td>
                 <td>
-                    <a href="{{ url_for('web.change_site', id=site.id) }}" class="btn btn-success" role="button">修改</a>
+                    <a href="{{ url_for('web.change_site', id=site.id) }}" class="btn btn-primary" role="button">修改</a>
                     <a href="{{ url_for('web.delete_site', id=site.id) }}" class="btn btn-danger" role="button">删除</a>
                 </td>
 

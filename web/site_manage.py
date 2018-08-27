@@ -78,3 +78,25 @@ def change_site(id):
             flash(form.errors)
         return redirect(url_for('web.edit_site_list'))
 
+# group
+@web.route('/group/change/<int:id>', methods=['GET', 'POST'])
+@login_required
+def change_group(id):
+    if request.method == 'GET':
+        grouplist = GroupList.query.filter_by(id=id).first_or_404()
+        form = GroupListForm()
+        form.name.data = grouplist.name
+        form.parent_id.data = grouplist.parent_id
+        return render_template('modify.html', form=form)
+    else:
+        form = GroupListForm()
+        if form.validate_on_submit():
+            group = GroupList.query.filter_by(id=id).first_or_404()
+            group.name = form.name.data
+            group.parent_id = form.parent_id.data
+            db.session.commit()
+            flash('You have modify a group')
+        else:
+            flash(form.errors)
+        return redirect(url_for('web.edit_site_list'))
+
