@@ -28,5 +28,4 @@ def create_app():
 
 def register_blueprint(app):
     from web import web
-    print(id(web))
     app.register_blueprint(web)

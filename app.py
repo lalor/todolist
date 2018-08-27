@@ -3,10 +3,9 @@
 from __future__ import unicode_literals
 
 from __init__ import create_app
-
+from libs.links import get_all_groups
 
 app = create_app()
-
 
 
 if __name__ == '__main__':

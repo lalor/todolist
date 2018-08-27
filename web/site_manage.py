@@ -11,19 +11,20 @@ from ext import db, login_manager
 from flask_login import login_required, current_user, login_user, logout_user
 from models.forms import SiteListForm, LoginForm, GroupListForm
 from models.lists import SiteList, GroupList, User
-from libs.links import get_links_by_group, get_all_links
+from libs.links import  get_all_links, get_all_groups
 from . import web
 
 
 @web.route('/site/manage', methods=['GET', 'POST'])
 @login_required
 def edit_site_list():
+    groups = get_all_groups()
     siteform = SiteListForm()
     groupform = GroupListForm()
     if request.method == 'GET':
         all_links = get_all_links()
         grouplists = GroupList.query.all()
-        return render_template('manage.html', sitelists=all_links, grouplists=grouplists, siteform=siteform, groupform=groupform)
+        return render_template('manage.html', sitelists=all_links, grouplists=grouplists, siteform=siteform, groupform=groupform, test=groups)
     else:
         if siteform.validate_on_submit():
             newsitelist = SiteList(current_user.id, siteform.title.data, siteform.url.data, siteform.description.data,
