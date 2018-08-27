@@ -20,8 +20,10 @@ def create_app():
 
     db.init_app(app)
     db.create_all(app=app)
+    
+    login_manager.login_view='web.login'
+    login_manager.login_message='请先登录'
     login_manager.init_app(app)
-    login_manager.login_view = "login"
     return app
 
 def register_blueprint(app):

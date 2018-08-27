@@ -6,9 +6,9 @@
 # @File    : site_manage.py
 # @Software: PyCharm
 from flask import request, render_template, flash, redirect, url_for
-from flask_login import login_required, current_user, login_user, logout_user
 from ext import db, login_manager
 
+from flask_login import login_required, current_user, login_user, logout_user
 from models.forms import SiteListForm, LoginForm, GroupListForm
 from models.lists import SiteList, GroupList, User
 from libs.links import get_links_by_group, get_all_links

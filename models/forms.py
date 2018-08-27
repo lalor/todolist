@@ -9,7 +9,7 @@ from wtforms.validators import DataRequired, Length, Optional, URL
 class SiteListForm(FlaskForm):
     title = StringField('标题', validators=[DataRequired(), Length(1, 64)])
     url = StringField('链接', validators=[URL(message="请输入正确的URL格式，http/https开头。")])
-    description = StringField('简介', validators=[Optional()], default='简单描述这个网站')
+    description = StringField('简介', validators=[Optional()])
     group_id = IntegerField('组别', validators=[DataRequired()], default='1')
     status = RadioField('显示状态', validators=[DataRequired()], choices=[("1", '上线'), ("0", '下线')], default='1')
     submit = SubmitField('提交')

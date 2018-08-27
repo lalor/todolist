@@ -6,6 +6,9 @@
     <img src="./static/img/KJU.jpg" class="img-rounded" width="128" height="128" align="right">
     <h1>森破导航</h1>
     <p>Stay young, stay simple.</p>
+    {% if current_user.is_authenticated %}
+        <p>Hi admin!</p>
+    {% endif %}
 </div>
 
 <table class="table table-bordered table-striped" style="word-break:break-all; word-wrap:break-all">

@@ -15,6 +15,8 @@ from models.lists import User
 from ext import login_manager
 from . import web
 
+login_manager.login_view = "web.login"
+
 @web.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -22,7 +24,7 @@ def login():
         if user:
             login_user(user)
             flash('Logged in. Welcome!')
-            return redirect(url_for('web.index.show_navi_page'))
+            return redirect(url_for('web.show_navi_page'))
         else:
             flash('Invalid username or password')
     form = LoginForm()
