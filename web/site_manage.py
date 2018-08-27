@@ -18,13 +18,12 @@ from . import web
 @web.route('/site/manage', methods=['GET', 'POST'])
 @login_required
 def edit_site_list():
-    groups = get_all_groups()
     siteform = SiteListForm()
     groupform = GroupListForm()
     if request.method == 'GET':
         all_links = get_all_links()
         grouplists = GroupList.query.all()
-        return render_template('manage.html', sitelists=all_links, grouplists=grouplists, siteform=siteform, groupform=groupform, test=groups)
+        return render_template('manage.html', sitelists=all_links, grouplists=grouplists, siteform=siteform, groupform=groupform)
     else:
         if siteform.validate_on_submit():
             newsitelist = SiteList(current_user.id, siteform.title.data, siteform.url.data, siteform.description.data,
