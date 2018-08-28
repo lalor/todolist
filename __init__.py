@@ -19,8 +19,11 @@ def create_app():
     bootstrap = Bootstrap(app)
 
     db.init_app(app)
-    db.create_all(app=app)
-    
+    with app.app_context():
+        # Extensions like Flask-SQLAlchemy now know what the "current" app
+        # is while within this block. Therefore, you can now run........
+        db.create_all()
+
     login_manager.login_view='web.login'
     login_manager.login_message='请先登录'
     login_manager.init_app(app)
@@ -28,4 +31,7 @@ def create_app():
 
 def register_blueprint(app):
     from web import web
+    # from libs import libs
+    # app.register_blueprint(libs)
     app.register_blueprint(web)
+

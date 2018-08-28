@@ -10,9 +10,11 @@ from flask import current_app
 from models.lists import SiteList, GroupList
 from ext import db
 
+
 def get_all_links():
     all_links = SiteList.query.order_by(SiteList.group_id)
     return all_links
+
 
 def get_all_groups():
     # all_groups = GroupList.query(id, name)

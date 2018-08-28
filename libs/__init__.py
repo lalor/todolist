@@ -5,3 +5,8 @@
 # @Site    : 
 # @File    : __init__.py
 # @Software: PyCharm
+from flask import Blueprint
+
+libs = Blueprint('libs', __name__)
+
+from libs import links
