@@ -29,7 +29,7 @@ class SiteList(db.Model):
 
 
 class GroupList(db.Model):
-    __tablename__ = "group"
+    __tablename__ = "grouplist"
     id = db.Column(db.Integer, primary_key=True)
     parent_id = db.Column(db.Integer)
     name = db.Column(db.String(64), nullable=True)

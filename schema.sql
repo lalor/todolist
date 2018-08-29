@@ -1,5 +1,5 @@
 -- we don't know how to generate schema flask_navi (class Schema) :(
-create table if not exists `group`
+create table if not exists grouplist
 (
 	id int auto_increment
 		primary key,
