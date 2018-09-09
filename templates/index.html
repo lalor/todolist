@@ -20,7 +20,7 @@
             {% for site in sitelists %}
                 {% if site.group_id == group.id and site.status %}
                     <td class="">
-                        <a href="{{ site.url }}" target="_blank" alt="{{ site.description }}">{{ site.title }}</a>
+                        <a rel="nofollow" href="{{ site.url }}" target="_blank" alt="{{ site.description }}">{{ site.title }}</a>
                     </td>
                 {% endif %}
             {% endfor %}
