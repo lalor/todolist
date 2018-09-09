@@ -3,3 +3,5 @@
 secure.py
 
 venv/
+
+data\.sql
