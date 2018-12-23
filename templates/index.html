@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../static/css/xenon-components.css">
     <link rel="stylesheet" href="../static/css/xenon-skins.css">
     <link rel="stylesheet" href="../static/css/nav.css">
+    <link rel="stylesheet" href="../static/css/simple-sidebar.css">
     <script src="../static/js/jquery-1.11.1.min.js"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -20,7 +21,24 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block page_content %}
-    <div class="page-container">
+    <div id="wrapper">
+    <div class="page-content-wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Smaple Navi
+                    </a>
+                </li>
+                {% for group in grouplists %}
+                <li>
+                    <a href="#{{ group.id }}">{{ group.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
         <div class="main-content">
             <div class="jumbotron">
                 <img src="./static/img/KJU.jpg" class="img-rounded" width="128" height="128" align="right">
@@ -32,7 +50,7 @@
             </div>
             <!-- Navi sites start-->
             {% for group in grouplists %}
-                <h4 class="text-gray"><i class="linecons-tag" style="margin-right: 7px;" id="{{ group.name }}"></i>{{ group.name }}</h4>
+                <h4 class="text-gray"><i class="linecons-tag" style="margin-right: 7px;" id="{{ group.id }}"></i>{{ group.name }}</h4>
                 <br>
                 <div class="row">
                     {% for site in sitelists %}
@@ -58,6 +76,7 @@
             <br />
         {% endfor %}
         </div>
+    </div>
     </div>
     <!-- 锚点平滑移动 -->
     <script type="text/javascript">
@@ -90,6 +109,10 @@
         $("html,body").animate({
             scrollTop: pos
         }, 500);
+    });
+        $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
     });
     </script>
 

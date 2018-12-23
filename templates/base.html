@@ -12,9 +12,17 @@
 {%- endblock metas %}
 
 {% block navbar %}
-    <nav class="navbar navbar-inverse container">
-        <div class="navbar-header"><a class="navbar-brand" href="{{ url_for('web.show_navi_page') }}">Simple Navi</a>
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('web.show_navi_page') }}">Simple Navi</a>
         </div>
+        <!-- Guest buttons-->
+        <ul class="nav navbar-nav pull-left">
+            <li>
+                <a class="btn" href="#menu-toggle" id="menu-toggle"><span
+                        class="glyphicon glyphicon-menu-hamburger"></span>菜单</a>
+            </li>
+        </ul>
         <!-- logout links -->
         {% if current_user.is_authenticated %}
             <ul class="nav navbar-nav pull-right">
